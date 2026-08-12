@@ -3,7 +3,7 @@ Term size should be 100x12
 The tool `asciinema` was used to make the terminal recordings. To make all the themes:
 
 ```bash
-for theme in asciinema dracula github-dark github-light kanagawa kanagawa-dragon kanagawa-light monokai nord solarized-dark solarized-light gruvbox-dark ; do agg --theme=$theme art/saltcube.cast art/gif/$theme-saltcube.gif ; done
+for theme in asciinema dracula github-dark github-light kanagawa kanagawa-dragon kanagawa-light monokai nord solarized-dark solarized-light gruvbox-dark ; do agg --theme=$theme art/saltcube.cast art/gif/$theme-saltcube.gif ; done ; agg art/saltcube.cast art/gif/default-saltcube.gif
 ```
 
 To perform the typing `ydotool` was used.

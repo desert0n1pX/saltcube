@@ -2,7 +2,7 @@
 
 SaltCube is a CLI tool designed to help users remember passwords through repetition. SaltCube can store passwords securely by taking the cryptographic hash of your passwords. You can also optionally include a username to associate with the password.
 
-# ![SaltCube](art/gif/github-dark-saltcube.gif)
+# ![SaltCube](art/gif/default-saltcube.gif)
 
 By default, SaltCube uses the argon2 algorithm (argon2id specifically) to securely hash your passwords. Argon2 won the 2015 password hashing competition as the way the algorithm accesses large memory regions makes it very computationally expensive to brute force.
 
