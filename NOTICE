@@ -1,0 +1,9 @@
+SaltCube
+Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
+
+This software includes components from libSodium (ISC License)
+ * Copyright (c) 2013-2026 Frank Denis <j at pureftpd dot org>
+ * https://github.com/jedisct1/libsodium
+
+This software includes components from openssl (Apache 2.0).
+ * https://github.com/openssl/openssl

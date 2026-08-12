@@ -1,0 +1,144 @@
+{
+  "configurations": [
+    {
+      "name": "Debug SaltCube",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/saltcube",
+      "args": [],
+      "stopAtEntry": true,
+      "preLaunchTask": "Build SaltCube With Debug Symbols",
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    
+    {
+      "name": "saltcube pw-add",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/saltcube",
+      "args": ["pw-add"],
+      "stopAtEntry": true,
+      "preLaunchTask": "Build SaltCube With Debug Symbols",
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    
+    {
+      "name": "saltcube pw-del",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/saltcube",
+      "args": ["pw-del"],
+      "stopAtEntry": true,
+      "preLaunchTask": "Build SaltCube With Debug Symbols",
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    
+    {
+      "name": "saltcube pw-hash",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/saltcube",
+      "args": ["pw-hash"],
+      "stopAtEntry": true,
+      "preLaunchTask": "Build SaltCube With Debug Symbols",
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+
+    {
+      "name": "saltcube pw-test",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/saltcube",
+      "args": ["pw-test"],
+      "stopAtEntry": true,
+      "preLaunchTask": "Build SaltCube With Debug Symbols",
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    
+    {
+      "name": "saltcube hash-add",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/saltcube",
+      "args": ["hash-add"],
+      "stopAtEntry": true,
+      "preLaunchTask": "Build SaltCube With Debug Symbols",
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    
+    {
+      "name": "saltcube hash-del",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/saltcube",
+      "args": ["hash-del"],
+      "stopAtEntry": true,
+      "preLaunchTask": "Build SaltCube With Debug Symbols",
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+        "label": "Build SaltCube With Debug Symbols",
+        "type": "shell",
+        "options": {
+            "env" : {
+                    "CXX_EXTRA_FLAGS": "-g"
+                }
+        },
+        "command": "make",
+        "args": ["saltcube","--always-make"],
+        "problemMatcher": [],
+        "group": {
+            "kind": "build",
+            "isDefault": true
+        }
+    },
+    {
+        "label": "Build SaltCube For Release",
+        "type": "shell",
+        "command": "make",
+        "args": ["saltcube","--always-make"],
+        "problemMatcher": [],
+        "group": {
+            "kind": "build",
+            "isDefault": false
+        }
+    },
+    {
+        "label": "Clean Up",
+        "type": "shell",
+        "command": "make",
+        "args": ["clean"],
+        "problemMatcher": [],
+        "group": {
+            "kind": "build",
+            "isDefault": false
+        }
+    },
+    {
+        "label": "Clean Up And Remove Containers",
+        "type": "shell",
+        "command": "make",
+        "args": ["clean-all"],
+        "problemMatcher": [],
+        "group": {
+            "kind": "build",
+            "isDefault": false
+        }
+    }
+]
+}

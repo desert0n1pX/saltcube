@@ -1,0 +1,27 @@
+# IDE Made Directories
+.cache/
+.vscode/
+
+# Clangd Config
+compile_commands.json
+
+# Binaries and related files
+saltcube
+hashes.txt
+vgcore.*
+
+# Container Builds
+buildenv-docker_1.0.tar
+buildenv-podman_1.0.tar
+
+# Project files
+art
+development
+Development Notes.md
+License
+makefile
+Readme.md
+
+# Source Files
+include
+src
