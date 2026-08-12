@@ -6,6 +6,16 @@ Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
 #ifndef LOGGING_H
 #define LOGGING_H
 
+#define TERM_ERASE_TO_END           "\033[J"
+#define TERM_ERASE_AFTER_CURSOR     "\033[0J"
+#define TERM_ERASE_BEFORE_CURSOR    "\033[1J"
+#define TERM_ERASE_SCREEN           "\033[2J"
+#define TERM_ERASE_SAVED            "\033[3J"
+#define TERM_ERASE_INLINE           "\033[K"
+#define TERM_ERASE_LINE_REMAIN      "\033[0K"
+#define TERM_ERASE_LINE_PREV        "\033[1K"
+#define TERM_ERASE_LINE             "\033[2K"
+
 #define TERM_FORMAT_RESET   "\033[0m"
 #define TERM_FORMAT_BOLD    "\033[1m"
 #define TERM_FORMAT_DIM     "\033[2m"

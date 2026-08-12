@@ -156,7 +156,7 @@ void check_loop(options &opts, password_handler &passwd_container, std::unique_p
     passwd_container.collect();
 
     if (passwd_container.equals_canidate("exit")) {
-      std::cout << "Exiting...\n";
+      std::cout << COLOR_FG_PURPLE TERM_ERASE_SCREEN TERM_ERASE_SAVED "Exiting...\n" TERM_FORMAT_RESET;
       break;
 
     } else if (passwd_container.equals_canidate("remind")) {
@@ -169,6 +169,12 @@ void check_loop(options &opts, password_handler &passwd_container, std::unique_p
         passwd_container.show_password();
       }
 
+    } else if (passwd_container.equals_canidate("clear")) {
+        std::cout << TERM_ERASE_SCREEN COLOR_FG_GREEN "Current screen cleared\n" COLOR_FG_DEFAULT;
+
+    } else if (passwd_container.equals_canidate("clear all")) {
+        std::cout << TERM_ERASE_SCREEN TERM_ERASE_SAVED COLOR_FG_GREEN "Terminal cleared\n" COLOR_FG_DEFAULT;
+    
     } else {
       if (passwd_container.is_set()) {
         reset_canidate(passwd_container.check_password(), passwd_container, opts);
