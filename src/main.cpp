@@ -4,7 +4,6 @@ Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
 */
 
 #include <exception>
-#include <iostream>
 #include <sodium.h>
 #include <stdexcept>
 #include <string>
@@ -35,7 +34,6 @@ Error codes:
 
 int main(int argc, char **argv){
     try {
-        std::cout << TERM_FORMAT_RESET ;
         options opts;
         configure_signals();
         opts.load(argc, argv);
