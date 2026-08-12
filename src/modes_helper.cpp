@@ -156,7 +156,7 @@ void check_loop(options &opts, password_handler &passwd_container, std::unique_p
     passwd_container.collect();
 
     if (passwd_container.equals_canidate("exit")) {
-      std::cout << COLOR_FG_PURPLE TERM_ERASE_SCREEN TERM_ERASE_SAVED "Exiting...\n" TERM_FORMAT_RESET;
+      std::cout << COLOR_FG_GREEN TERM_HOME TERM_ERASE_SCREEN TERM_ERASE_SAVED "Terminal cleared before exit.\n" TERM_FORMAT_RESET;
       break;
 
     } else if (passwd_container.equals_canidate("remind")) {

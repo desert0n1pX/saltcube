@@ -6,6 +6,8 @@ Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
 #ifndef LOGGING_H
 #define LOGGING_H
 
+#define TERM_HOME   "\033[H"
+
 #define TERM_ERASE_TO_END           "\033[J"
 #define TERM_ERASE_AFTER_CURSOR     "\033[0J"
 #define TERM_ERASE_BEFORE_CURSOR    "\033[1J"
@@ -25,6 +27,9 @@ Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
 #define TERM_FORMAT_INVERT  "\033[7m"
 #define TERM_FORMAT_HIDDEN  "\033[8m"
 #define TERM_FORMAT_STRIKET "\033[9m"
+
+#define COLOR_FG_RGB(r,g,b)    "\033[38;2;"#r";"#g";"#b"m"
+#define COLOR_BG_RGB(r,g,b)    "\033[48;2;"#r";"#g";"#b"m"
 
 #define COLOR_FG_BLACK      "\033[30m"
 #define COLOR_FG_RED        "\033[31m"
