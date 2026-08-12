@@ -17,7 +17,7 @@ This program comes with ABSOLUTELY NO WARRANTY; for details use option "--licens
 This is free software, and you are welcome to redistribute it
 under certain conditions; use option "--license-full" for details.
 
-Version: 1.0.0
+Version: 1.1.0
 
 Usage: {0} [options...] [subcommand]
 Options:
