@@ -70,11 +70,11 @@ void logging::log(enum LOGLEVEL level, std::string message) {
         break;
     case INFO:
         if (log_level >= INFO)
-        std::cout << COLOR_FG_LIGHTBLUE << "[INFO]: " << message << COLOR_FG_DEFAULT << std::endl;
+        std::cout << COLOR_FG_BLUE << "[INFO]: " << message << COLOR_FG_DEFAULT << std::endl;
         break;
     case DEBUG:
         if (log_level >= DEBUG)
-        std::cout << COLOR_FG_PURPLE << "[DEBUG]: " << message << COLOR_FG_DEFAULT << std::endl;
+        std::cout << COLOR_FG_LIGHTBLUE TERM_FORMAT_DIM TERM_FORMAT_BOLD << "[DEBUG]: " << message << COLOR_FG_DEFAULT TERM_FORMAT_RESET << std::endl;
         break;
     }
 }
