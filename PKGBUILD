@@ -1,6 +1,7 @@
 # Maintainer: @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
 pkgname='saltcube-git'
 pkgdesc='A CLI tool to help you remember passwords'
+provides=('saltcube')
 conflicts=('saltcube')
 pkgver='1.0.0'
 pkgrel=1
