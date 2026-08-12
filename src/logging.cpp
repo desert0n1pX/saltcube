@@ -54,27 +54,27 @@ void logging::log(enum LOGLEVEL level, std::string message) {
 
     case ERROR:
         if (log_level >= ERROR)
-        std::cout << "[ERROR]: " << message << std::endl;
+        std::cout << COLOR_BG_RED << COLOR_FG_WHITE << TERM_FORMAT_BOLD << "[ERROR]: " << message << TERM_FORMAT_RESET << std::endl;
         break;
     case CRITICAL:
         if (log_level >= CRITICAL)
-        std::cout << "[CRITICAL]: " << message << std::endl;
+        std::cout << COLOR_FG_RED << "[CRITICAL]: " << message << COLOR_FG_DEFAULT << std::endl;
         break;
     case WARNING:
         if (log_level >= WARNING)
-        std::cout << "[WARNING]: " << message << std::endl;
+        std::cout << COLOR_FG_YELLOW << "[WARNING]: " << message << COLOR_FG_DEFAULT << std::endl;
         break;
     case NOTICE:
         if (log_level >= NOTICE)
-        std::cout << "[NOTICE]: " << message << std::endl;
+        std::cout << COLOR_FG_PURPLE << "[NOTICE]: " << message << COLOR_FG_DEFAULT << std::endl;
         break;
     case INFO:
         if (log_level >= INFO)
-        std::cout << "[INFO]: " << message << std::endl;
+        std::cout << COLOR_FG_LIGHTBLUE << "[INFO]: " << message << COLOR_FG_DEFAULT << std::endl;
         break;
     case DEBUG:
         if (log_level >= DEBUG)
-        std::cout << "[DEBUG]: " << message << std::endl;
+        std::cout << COLOR_FG_PURPLE << "[DEBUG]: " << message << COLOR_FG_DEFAULT << std::endl;
         break;
     }
 }

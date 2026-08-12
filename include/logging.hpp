@@ -6,6 +6,36 @@ Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
 #ifndef LOGGING_H
 #define LOGGING_H
 
+#define TERM_FORMAT_RESET   "\033[0m"
+#define TERM_FORMAT_BOLD    "\033[1m"
+#define TERM_FORMAT_DIM     "\033[2m"
+#define TERM_FORMAT_ITALIC  "\033[3m"
+#define TERM_FORMAT_UNDER   "\033[4m"
+#define TERM_FORMAT_BLINK   "\033[5m"
+#define TERM_FORMAT_INVERT  "\033[7m"
+#define TERM_FORMAT_HIDDEN  "\033[8m"
+#define TERM_FORMAT_STRIKET "\033[9m"
+
+#define COLOR_FG_BLACK      "\033[30m"
+#define COLOR_FG_RED        "\033[31m"
+#define COLOR_FG_GREEN      "\033[32m"
+#define COLOR_FG_YELLOW     "\033[33m"
+#define COLOR_FG_BLUE       "\033[34m"
+#define COLOR_FG_PURPLE     "\033[35m"
+#define COLOR_FG_LIGHTBLUE  "\033[36m"
+#define COLOR_FG_WHITE      "\033[37m"
+#define COLOR_FG_DEFAULT    "\033[39m"
+
+#define COLOR_BG_BLACK      "\033[40m"
+#define COLOR_BG_RED        "\033[41m"
+#define COLOR_BG_GREEN      "\033[42m"
+#define COLOR_BG_YELLOW     "\033[43m"
+#define COLOR_BG_BLUE       "\033[44m"
+#define COLOR_BG_PURPLE     "\033[45m"
+#define COLOR_BG_LIGHTBLUE  "\033[46m"
+#define COLOR_BG_WHITE      "\033[47m"
+#define COLOR_BG_DEFAULT    "\033[49m"
+
 #include "saltcube_exception.hpp"
 #include <exception>
 #include <string>
