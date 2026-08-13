@@ -103,7 +103,7 @@ bool password_handler::save(){
     logging::log(logging::NOTICE, "Password cached in memory. Don't leave this program unattended.");
     if (strlen(password.get_as_char()) == 0) {
         while (password.size() < canidate.size()){
-            password.grow_to(canidate.size());
+            password.grow(canidate.size());
         }
 
         strcpy(password.get_as_char(), canidate.get_as_char());

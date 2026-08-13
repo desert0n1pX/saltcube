@@ -91,7 +91,7 @@ class cube_mem {
      * @throws cube_mem_alloc_error unable to allocate memory
      * 
      */
-    virtual void    grow_to(size_t);
+    virtual void    grow(size_t);
 
     /**
      * @brief Get size of the 
@@ -146,7 +146,7 @@ class cube_mem_secure final : public cube_mem {
      * @return true Success
      * @return false fail
      */
-    virtual void grow_to(size_t) override;
+    virtual void grow(size_t) override;
 };
 
 class cube_mem_alloc_error final : public saltcube_exception {
