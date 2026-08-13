@@ -49,8 +49,8 @@ int worker_sha512_check(const char * hash_str, const void * password, size_t pas
     if (iterations < sha512_pwhash_ITERATIONS_MIN || iterations > sha512_pwhash_ITERATIONS_MAX || num_threads < 1 || num_threads > std::thread::hardware_concurrency())
         throw value_improper_format_error(__PRETTY_FUNCTION__, __FILE_NAME__, __LINE__, "worker parameters invalid");
 
-    cube_mem new_entry(SALT_MAX_B64 + SHA512_DIGEST_B64_LEN + 16); // This is safe as the worker wont make a string longer than this
-    cube_mem original_salt_bin(salt_b64.size()); // It cant be possible for the binary to be smaller than the b64
+    cube_mem new_entry(10 + parameters.size() + salt_b64.size() + SHA512_DIGEST_B64_LEN); // len(sha512) + len($$$$) = 10 and the worker wouldnt write more than that. The only way the final size would differ would be if the parameters contained negative numbers, causing a shorter string
+    cube_mem original_salt_bin(salt_b64.size()); // It cant be possible for the binary to be larger than the b64
 
     // We dont need both of these here but this comment should remain for reference
     size_t written; // inplace of bin_len, pass as reference to track bytes length
