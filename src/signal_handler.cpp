@@ -7,6 +7,7 @@ Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
 
 #include "logging.hpp"
 
+#include <iostream>
 #include <string.h>
 
 #include <csignal>
@@ -21,8 +22,8 @@ volatile sig_atomic_t gSignalStatus = 0;
 void check_signal(const char * caller, std::string file, int line){
     if (gSignalStatus == 0)
         return;
-
-    logging::log(logging::NOTICE, "Exiting...");
+    std::cout << TERM_HOME TERM_ERASE_SCREEN TERM_ERASE_SAVED;
+    logging::log(logging::NOTICE, "Cleared terminal. Exiting...");
     throw signal_exception(caller, file, line, gSignalStatus);
 }
 

@@ -3,7 +3,7 @@ pkgname='saltcube-git'
 pkgdesc='A CLI tool to help you remember passwords'
 provides=('saltcube')
 conflicts=('saltcube')
-pkgver='1.0.0'
+pkgver='1.1.0'
 pkgrel=1
 arch=('x86_64')
 

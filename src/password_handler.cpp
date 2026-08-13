@@ -70,7 +70,7 @@ void password_handler::clear_password(){
 void password_handler::collect(){
     disable_echo();
 
-    std::cout << "Enter a password. Characters are hidden.\n";
+    std::cout << "Enter a password. Characters are " TERM_FORMAT_DIM "hidden...\n" TERM_FORMAT_RESET;
 
     size_t input_len = 0;
     for (char input = std::getchar() ; !(input == '\0' || input == '\n' || input == EOF) ; input = std::getchar()){
@@ -115,6 +115,6 @@ bool password_handler::save(){
 }
 
 void password_handler::show_password() const {
-    std::cout << "Your password is \"" << password.get_as_char() << "\"\n";
+    std::cout << "Your password is \"" COLOR_FG_GREEN << password.get_as_char() << COLOR_FG_DEFAULT "\"\n";
 }
 
