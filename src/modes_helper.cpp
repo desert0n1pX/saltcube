@@ -147,6 +147,8 @@ void pre_loop_messages(options &opts, password_handler &passwd_container) {
     std::cout << "Type \"" COLOR_FG_GREEN "remind" COLOR_FG_DEFAULT "\" to see your password after typing it "
                  "correctly.\nType \"" COLOR_FG_GREEN "exit" COLOR_FG_DEFAULT "\" to exit.\n";
   }
+std::cout << "Type \"" COLOR_FG_GREEN "clear" COLOR_FG_DEFAULT "\" to clear the screen or "
+                 "\"" COLOR_FG_GREEN "clear all" COLOR_FG_DEFAULT "\" to also clear the full terminal.\n";
 }
 
 void check_loop(options &opts, password_handler &passwd_container, std::unique_ptr<entry> &existing_entry) {
