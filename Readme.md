@@ -23,7 +23,7 @@ To use this tool you can either build it from source, download the binary, or if
 
 ### Installing the Pre-made Package
 
-To install the premade package, locate the release you want to install on the releases page and run as root `pacman -U https://<download-url>.tar.zst` or download it and run `pacman -U /path/to/saltcube-<version>-x86_64.pkg.tar.zst`.
+To install the premade package, locate the release you want to install on the releases page and download it (it will look like `saltcube-<version>-x86_64.pkg.tar.zst`). Then run as root `pacman -U /path/to/saltcube-<version>-x86_64.pkg.tar.zst`.
 
 ### Building From Source
 
