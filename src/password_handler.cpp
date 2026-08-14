@@ -47,6 +47,31 @@ void password_handler::enable_echo(){
     tcsetattr(fileno(stdin), TCSANOW, &termsettings); // Apply NOW
 }
 
+/**
+ * @brief Set cannonical mode
+ * 
+ */
+void password_handler::set_nonconnonical(){
+    struct termios termsettings;
+
+    tcgetattr(fileno(stdin), &termsettings); // Get current settings
+    termsettings.c_lflag &= ~ICANON; // Set the echo bit to 1 in local attributes
+    tcsetattr(fileno(stdin), TCSANOW, &termsettings); // Apply NOW
+}
+
+
+/**
+ * @brief Set cannonical mode
+ * 
+ */
+void password_handler::set_connonical(){
+    struct termios termsettings;
+
+    tcgetattr(fileno(stdin), &termsettings); // Get current settings
+    termsettings.c_lflag |= ICANON; // Set the echo bit to 1 in local attributes
+    tcsetattr(fileno(stdin), TCSANOW, &termsettings); // Apply NOW
+}
+
 // Public Constructors
 //////////////////////////////////////////////////////////////////////
 

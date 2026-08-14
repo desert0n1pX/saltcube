@@ -42,6 +42,18 @@ class password_handler {
     * 
     */
     static void enable_echo();
+    
+    /**
+    * @brief Disable terminal echo while typing
+    * 
+    */
+    static void set_connonical();
+
+    /**
+    * @brief Enable terminal echo while typing
+    * 
+    */
+    static void set_nonconnonical();
 
     // Public Methods
     //////////////////////////////////////////////////////////////////////
