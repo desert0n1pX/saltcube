@@ -17,7 +17,7 @@ This program comes with ABSOLUTELY NO WARRANTY; for details use option "--licens
 This is free software, and you are welcome to redistribute it
 under certain conditions; use option "--license-full" for details.
 
-Version: 1.1.0
+Version: 1.2.0
 
 Usage: {0} [options...] [subcommand]
 Options:
@@ -65,8 +65,7 @@ Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+the Free Software Foundation, version 3 of the License.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -930,7 +929,7 @@ state the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
     <one line to give the program's name and a brief idea of what it does.>
-    Copyright (C) @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
+    Copyright (C) <year>  <name of author>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -950,7 +949,7 @@ Also add information on how to contact you by electronic and paper mail.
   If the program does terminal interaction, make it output a short
 notice like this when it starts in an interactive mode:
 
-    <program>  Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
+    <program>  Copyright (C) <year>  <name of author>
     This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
     This is free software, and you are welcome to redistribute it
     under certain conditions; type `show c' for details.
@@ -971,7 +970,8 @@ the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <https://www.gnu.org/licenses/why-not-lgpl.html>.
 
-Fun fact, this page is 46505 bytes long!
+
+Fun fact, this page is 46456 bytes long!
 )LITERAL";
 
 #endif
