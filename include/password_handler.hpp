@@ -106,6 +106,12 @@ class password_handler {
      * @return false password unset 
      */
     bool is_set() const;
+
+    /**
+     * @brief Show the password as the user types it
+     * 
+     */
+    void follow();
     
     /**
      * @brief Save the canidate as the password

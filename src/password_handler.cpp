@@ -120,6 +120,59 @@ const char * password_handler::get_canidate() const {
     return canidate.get_as_char();
 }
 
+void show_mirror(const char * passwd, const char * current_line){
+    std::cout << TERM_MOVE_UP(1) << "\r";
+    for (size_t idx = 0 ; idx < strlen(passwd) ; idx++){
+        if (idx < strlen(current_line)) {
+            if (current_line[idx] == passwd[idx]) {
+                std::cout << COLOR_BG_GREEN
+                          << passwd[idx];
+            } else {
+                std::cout << COLOR_BG_RED
+                          << passwd[idx];
+            
+            }
+            
+        } else {
+            std::cout << COLOR_BG_DEFAULT TERM_FORMAT_DIM 
+                      << passwd[idx];
+        }
+    }
+    std::cout << TERM_FORMAT_RESET;
+    std::cout << "\n" << current_line << TERM_ERASE_AFTER_CURSOR;
+}
+
+void password_handler::follow(){
+    disable_echo();
+    set_nonconnonical();
+
+    std::cout << "Follow along!\n\n";
+    canidate.zero();
+    show_mirror(password.get_as_char(), canidate.get_as_char());
+
+    size_t input_len = 0;
+    for (char input = std::getchar() ; !(input == '\0' || input == '\n' || input == EOF) ; input = std::getchar()){
+        if (input == '\177') { // backspace(del)
+            if (input_len > 0)
+                canidate.get_as_char()[--input_len] = '\0';
+            show_mirror(password.get_as_char(), canidate.get_as_char());
+            continue;
+        }
+
+        if (std::strlen(canidate.get_as_char()) + 2 > canidate.size())
+            canidate.grow();
+
+        canidate.get_as_char()[input_len] = input;
+        canidate.get_as_char()[++input_len] = '\0';
+        show_mirror(password.get_as_char(), canidate.get_as_char());
+    }
+    std::cout << "\n";
+
+    SIGCHECK
+    set_connonical();
+    enable_echo();
+}
+
 bool password_handler::is_set() const{
     return strlen(password.get_as_char()) > 0;
 }

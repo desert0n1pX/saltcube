@@ -19,6 +19,8 @@ Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
 #include <string>
 #include <vector>
 
+bool follow_mode = false;
+
 bool check_entry_against_hash(entry &entry, const char * passwd){
     switch (entry.get_mode_enum()) {
 
@@ -133,34 +135,87 @@ void reset_canidate(bool correct_password, password_handler &passwd_container, o
     }
 }
 
-void pre_loop_messages(options &opts, password_handler &passwd_container) {
-  if (opts.get_nocache()) {
-    std::cout << COLOR_FG_YELLOW "Nocache is enabled, you will be unable to use the \"remind\" "
-                 "command.\n" COLOR_FG_DEFAULT
-                 "Type \"" COLOR_FG_GREEN "exit" COLOR_FG_DEFAULT "\" to exit.\n";
+void show_remind_status(options &opts, password_handler &passwd_container) {
+    if (opts.get_nocache()) {
+        std::cout << COLOR_FG_YELLOW "Command " COLOR_FG_RED "\"remind\"" COLOR_FG_YELLOW " unavailable, nocache is enabled.\n" COLOR_FG_DEFAULT;
 
-  } else if (passwd_container.is_set()) {
-    std::cout << "Type \"" COLOR_FG_GREEN "remind" COLOR_FG_DEFAULT "\" to see your password.\n"
-                 "Type \"" COLOR_FG_GREEN "exit" COLOR_FG_DEFAULT "\" to exit.\n";
+    } else if (passwd_container.is_set()) {
+        std::cout << "Type \"" COLOR_FG_GREEN "remind" COLOR_FG_DEFAULT "\" to see your password.\n";
 
-  } else {
-    std::cout << "Type \"" COLOR_FG_GREEN "remind" COLOR_FG_DEFAULT "\" to see your password after typing it "
-                 "correctly.\nType \"" COLOR_FG_GREEN "exit" COLOR_FG_DEFAULT "\" to exit.\n";
-  }
-std::cout << "Type \"" COLOR_FG_GREEN "clear" COLOR_FG_DEFAULT "\" to clear the screen or "
-                 "\"" COLOR_FG_GREEN "clear all" COLOR_FG_DEFAULT "\" to also clear the full terminal.\n";
+    } else {
+        std::cout << "Type \"" COLOR_FG_GREEN "remind" COLOR_FG_DEFAULT "\" to see your password after typing it correctly.\n";
+    }
+}
+
+void show_follow_status(options &opts, password_handler &passwd_container) {
+    if (opts.get_nocache()) {
+        std::cout << COLOR_FG_YELLOW "Command " COLOR_FG_RED "\"follow\"" COLOR_FG_YELLOW " unavailable, nocache is enabled.\n" COLOR_FG_DEFAULT;
+
+    } else if (passwd_container.is_set()) {
+        std::cout << "Type \"" COLOR_FG_GREEN "follow" COLOR_FG_DEFAULT "\" to see your password interactively.\n";
+
+    } else {
+        std::cout << "Type \"" COLOR_FG_GREEN "follow" COLOR_FG_DEFAULT "\" to see your password after typing it correctly.\n";
+    }
+}
+
+void practice_help(options &opts, password_handler &passwd_container){
+    std::cout << "Type \"" COLOR_FG_GREEN "clear" COLOR_FG_DEFAULT "\" to clear the screen.\n"
+                 "Type \"" COLOR_FG_GREEN "clear all" COLOR_FG_DEFAULT "\" to clear the screen and screen history.\n"
+                 "Type \"" COLOR_FG_GREEN "exit" COLOR_FG_DEFAULT "\" to exit.\n";
+                 show_follow_status(opts, passwd_container);
+    std::cout << "Type \"" COLOR_FG_GREEN "follow off" COLOR_FG_DEFAULT "\" hide your password when you type.\n"
+                 "Type \"" COLOR_FG_GREEN "help" COLOR_FG_DEFAULT "\" to see this page.\n";
+                 show_remind_status(opts, passwd_container);
+}
+
+void pre_loop_messages() {
+  std::cout << "Type \"" COLOR_FG_GREEN "exit" COLOR_FG_DEFAULT "\" to exit.\n"
+               "Type \"" COLOR_FG_GREEN "help" COLOR_FG_DEFAULT "\" for a list of in-practice commands.\n";
+}
+
+void prompt_pass(password_handler &contianer){
+    if (follow_mode) {
+        contianer.follow();
+    } else {
+        contianer.collect();
+    }
 }
 
 void check_loop(options &opts, password_handler &passwd_container, std::unique_ptr<entry> &existing_entry) {
-    pre_loop_messages(opts, passwd_container);
+    pre_loop_messages();
 
     while (true) {
-    passwd_container.collect();
+    prompt_pass(passwd_container);
 
-    if (passwd_container.equals_canidate("exit")) {
-      std::cout << COLOR_FG_GREEN TERM_HOME TERM_ERASE_SCREEN TERM_ERASE_SAVED "Terminal cleared before exit.\n" TERM_FORMAT_RESET;
-      break;
+    if (passwd_container.equals_canidate("clear")) {
+        std::cout << TERM_ERASE_SCREEN COLOR_FG_GREEN "Current screen cleared\n" COLOR_FG_DEFAULT;
 
+    } else if (passwd_container.equals_canidate("clear all")) {
+        std::cout << TERM_ERASE_SCREEN TERM_ERASE_SAVED COLOR_FG_GREEN "Terminal cleared\n" COLOR_FG_DEFAULT;
+    
+    } else if (passwd_container.equals_canidate("exit")) {
+        std::cout << COLOR_FG_GREEN TERM_MOVE_HOME TERM_ERASE_SCREEN TERM_ERASE_SAVED "Terminal cleared before exit.\n" TERM_FORMAT_RESET;
+        break;
+    
+    } else if (passwd_container.equals_canidate("follow")) {
+        if (opts.get_nocache()) {
+            std::cout << COLOR_FG_YELLOW "Unable to use this command, nocache is enabled\n" COLOR_FG_DEFAULT;
+        } else if (!passwd_container.is_set()) {
+            std::cout << COLOR_FG_YELLOW "Unable to use this command, you must first enter your "
+                     "password correctly once\n" COLOR_FG_DEFAULT;
+        } else {
+            std::cout << COLOR_FG_GREEN "Follow along mode enabled.\n" COLOR_FG_DEFAULT;
+            follow_mode = true;
+        }
+    
+    } else if (passwd_container.equals_canidate("follow off")) {
+        std::cout << COLOR_FG_GREEN "Follow along mode disabled.\n" COLOR_FG_DEFAULT;
+        follow_mode = false;
+    
+    } else if (passwd_container.equals_canidate("help")) {
+        practice_help(opts, passwd_container);
+    
     } else if (passwd_container.equals_canidate("remind")) {
       if (opts.get_nocache()) {
         std::cout << COLOR_FG_YELLOW "Unable to use this command, nocache is enabled\n" COLOR_FG_DEFAULT;
@@ -171,12 +226,8 @@ void check_loop(options &opts, password_handler &passwd_container, std::unique_p
         passwd_container.show_password();
       }
 
-    } else if (passwd_container.equals_canidate("clear")) {
-        std::cout << TERM_ERASE_SCREEN COLOR_FG_GREEN "Current screen cleared\n" COLOR_FG_DEFAULT;
 
-    } else if (passwd_container.equals_canidate("clear all")) {
-        std::cout << TERM_ERASE_SCREEN TERM_ERASE_SAVED COLOR_FG_GREEN "Terminal cleared\n" COLOR_FG_DEFAULT;
-    
+
     } else {
       if (passwd_container.is_set()) {
         reset_canidate(passwd_container.check_password(), passwd_container, opts);
@@ -185,6 +236,7 @@ void check_loop(options &opts, password_handler &passwd_container, std::unique_p
         bool hashes_correctly = check_entry_against_hash(*existing_entry, passwd_container.get_canidate());
         reset_canidate(hashes_correctly, passwd_container, opts);
       }
+
     }
   }
 }
