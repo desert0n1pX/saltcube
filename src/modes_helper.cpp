@@ -19,7 +19,15 @@ Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
 #include <string>
 #include <vector>
 
-bool follow_mode = false;
+enum read_mode {
+    NORMAL,
+    FOLLOW,
+    SHADOW
+};
+
+enum read_mode read_mode = NORMAL;
+
+password_handler * loop_passwd;
 
 bool check_entry_against_hash(entry &entry, const char * passwd){
     switch (entry.get_mode_enum()) {
@@ -111,12 +119,27 @@ void delete_entry(simple_file &savefile, entry *entry_from_file){
     savefile.write_file();
 }
 
+void password_accessible_prompt(options &options,
+                                password_handler & contianer,
+                                std::string disabled_prompt,
+                                std::string unavail_prompt,
+                                std::string enabled_prompt,
+                                void (*on_success)(void)){
+    if (options.get_nocache()) {
+            std::cout << disabled_prompt << "\n";
+        } else if (!contianer.is_set()) {
+            std::cout << unavail_prompt << "\n";
+        } else {
+            std::cout << enabled_prompt << "\n";
+            on_success();
+        }
+}
 
 void get_entry_from_file(options &opts, password_handler &passwd_container, std::unique_ptr<entry> &existing_entry, simple_file &savefile) {
     if (opts.get_username().size() > 0) {
         existing_entry = find_entry_by_username(savefile.get_lines(), opts.get_username());
     } else {
-        passwd_container.collect();
+        passwd_container.collect("Enter a password to look for...");
 
         existing_entry = find_entry_by_pwhash(savefile.get_lines(), passwd_container, opts);
     }
@@ -136,27 +159,27 @@ void reset_canidate(bool correct_password, password_handler &passwd_container, o
 }
 
 void show_remind_status(options &opts, password_handler &passwd_container) {
-    if (opts.get_nocache()) {
-        std::cout << COLOR_FG_YELLOW "Command " COLOR_FG_RED "\"remind\"" COLOR_FG_YELLOW " unavailable, nocache is enabled.\n" COLOR_FG_DEFAULT;
-
-    } else if (passwd_container.is_set()) {
-        std::cout << "Type \"" COLOR_FG_GREEN "remind" COLOR_FG_DEFAULT "\" to see your password.\n";
-
-    } else {
-        std::cout << "Type \"" COLOR_FG_GREEN "remind" COLOR_FG_DEFAULT "\" to see your password after typing it correctly.\n";
-    }
+    password_accessible_prompt(opts, passwd_container, 
+                                "Cmnd \"" COLOR_FG_RED "remind" COLOR_FG_DEFAULT "\" unavailable, nocache is enabled",
+                                "Type \"" COLOR_FG_YELLOW "remind" COLOR_FG_DEFAULT "\" to see your password, you must first enter your password correctly once",
+                                "Type \"" COLOR_FG_GREEN "remind" COLOR_FG_DEFAULT "\" to see your password",
+                                [] -> void {});
 }
 
 void show_follow_status(options &opts, password_handler &passwd_container) {
-    if (opts.get_nocache()) {
-        std::cout << COLOR_FG_YELLOW "Command " COLOR_FG_RED "\"follow\"" COLOR_FG_YELLOW " unavailable, nocache is enabled.\n" COLOR_FG_DEFAULT;
+    password_accessible_prompt(opts, passwd_container, 
+                                "Cmnd \"" COLOR_FG_RED "follow" COLOR_FG_DEFAULT "\" unavailable, nocache is enabled",
+                                "Type \"" COLOR_FG_YELLOW "follow" COLOR_FG_DEFAULT "\" to interactively see your password, you must first enter your password correctly once",
+                                "Type \"" COLOR_FG_GREEN "follow" COLOR_FG_DEFAULT "\" to interactively see your password",
+                                [] -> void {});
+}
 
-    } else if (passwd_container.is_set()) {
-        std::cout << "Type \"" COLOR_FG_GREEN "follow" COLOR_FG_DEFAULT "\" to see your password interactively.\n";
-
-    } else {
-        std::cout << "Type \"" COLOR_FG_GREEN "follow" COLOR_FG_DEFAULT "\" to see your password after typing it correctly.\n";
-    }
+void show_shadow_status(options &opts, password_handler &passwd_container) {
+    password_accessible_prompt(opts, passwd_container, 
+                                "Cmnd \"" COLOR_FG_RED "shadow" COLOR_FG_DEFAULT "\" unavailable, nocache is enabled",
+                                "Type \"" COLOR_FG_YELLOW "shadow" COLOR_FG_DEFAULT "\" to see correctness, you must first enter your password correctly once",
+                                "Type \"" COLOR_FG_GREEN "shadow" COLOR_FG_DEFAULT "\" to  see correctness",
+                                [] -> void {});
 }
 
 void practice_help(options &opts, password_handler &passwd_container){
@@ -164,9 +187,10 @@ void practice_help(options &opts, password_handler &passwd_container){
                  "Type \"" COLOR_FG_GREEN "clear all" COLOR_FG_DEFAULT "\" to clear the screen and screen history.\n"
                  "Type \"" COLOR_FG_GREEN "exit" COLOR_FG_DEFAULT "\" to exit.\n";
                  show_follow_status(opts, passwd_container);
-    std::cout << "Type \"" COLOR_FG_GREEN "follow off" COLOR_FG_DEFAULT "\" hide your password when you type.\n"
-                 "Type \"" COLOR_FG_GREEN "help" COLOR_FG_DEFAULT "\" to see this page.\n";
+    std::cout << "Type \"" COLOR_FG_GREEN "help" COLOR_FG_DEFAULT "\" to see this page.\n";
+    std::cout << "Type \"" COLOR_FG_GREEN "hide" COLOR_FG_DEFAULT "\" to hide input.\n";
                  show_remind_status(opts, passwd_container);
+                 show_shadow_status(opts, passwd_container);
 }
 
 void pre_loop_messages() {
@@ -175,15 +199,22 @@ void pre_loop_messages() {
 }
 
 void prompt_pass(password_handler &contianer){
-    if (follow_mode) {
-        contianer.follow();
-    } else {
-        contianer.collect();
+    switch (read_mode) {
+    case NORMAL:
+        contianer.collect("Enter your password or command...");
+        break;
+    case FOLLOW:
+        contianer.follow("Follow along or enter a command...");
+        break;
+    case SHADOW:
+        contianer.follow("Enter your password or command...", ' ');
+        break;
     }
 }
 
 void check_loop(options &opts, password_handler &passwd_container, std::unique_ptr<entry> &existing_entry) {
     pre_loop_messages();
+    loop_passwd = &passwd_container;
 
     while (true) {
     prompt_pass(passwd_container);
@@ -199,34 +230,32 @@ void check_loop(options &opts, password_handler &passwd_container, std::unique_p
         break;
     
     } else if (passwd_container.equals_canidate("follow")) {
-        if (opts.get_nocache()) {
-            std::cout << COLOR_FG_YELLOW "Unable to use this command, nocache is enabled\n" COLOR_FG_DEFAULT;
-        } else if (!passwd_container.is_set()) {
-            std::cout << COLOR_FG_YELLOW "Unable to use this command, you must first enter your "
-                     "password correctly once\n" COLOR_FG_DEFAULT;
-        } else {
-            std::cout << COLOR_FG_GREEN "Follow along mode enabled.\n" COLOR_FG_DEFAULT;
-            follow_mode = true;
-        }
-    
-    } else if (passwd_container.equals_canidate("follow off")) {
-        std::cout << COLOR_FG_GREEN "Follow along mode disabled.\n" COLOR_FG_DEFAULT;
-        follow_mode = false;
+        password_accessible_prompt(opts, passwd_container, 
+                                    COLOR_FG_RED "Unable set follow mode, nocache is enabled" COLOR_FG_DEFAULT,
+                                    COLOR_FG_YELLOW "Unable set follow mode, you must first enter your password correctly once" COLOR_FG_DEFAULT,
+                                    "Follow along mode enabled.",
+                                    [] -> void {read_mode = FOLLOW;});
     
     } else if (passwd_container.equals_canidate("help")) {
         practice_help(opts, passwd_container);
     
+    } else if (passwd_container.equals_canidate("hide")) {
+        std::cout << COLOR_FG_GREEN "Setting hide mode.\n" COLOR_FG_DEFAULT;
+        read_mode = NORMAL;
+    
+    } else if (passwd_container.equals_canidate("shadow")) {
+        password_accessible_prompt(opts, passwd_container, 
+                                    COLOR_FG_RED "Unable to set shadow mode, nocache is enabled" COLOR_FG_DEFAULT,
+                                    COLOR_FG_YELLOW "Unable to set shadow mode, you must first enter your password correctly once" COLOR_FG_DEFAULT,
+                                    "Shadow mode enabled.",
+                                    [] -> void {read_mode = SHADOW;});
+    
     } else if (passwd_container.equals_canidate("remind")) {
-      if (opts.get_nocache()) {
-        std::cout << COLOR_FG_YELLOW "Unable to use this command, nocache is enabled\n" COLOR_FG_DEFAULT;
-      } else if (!passwd_container.is_set()) {
-        std::cout << COLOR_FG_YELLOW "Unable to use this command, you must first enter your "
-                     "password correctly once\n" COLOR_FG_DEFAULT;
-      } else {
-        passwd_container.show_password();
-      }
-
-
+        password_accessible_prompt(opts, passwd_container, 
+                                    COLOR_FG_RED "Unable to use this command, nocache is enabled" COLOR_FG_DEFAULT,
+                                    COLOR_FG_YELLOW "Unable to use this command, you must first enter your password correctly once" COLOR_FG_DEFAULT,
+                                    "",
+                                    [] -> void {loop_passwd->show_password();});
 
     } else {
       if (passwd_container.is_set()) {

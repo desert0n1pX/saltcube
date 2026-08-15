@@ -82,7 +82,7 @@ class password_handler {
      * @brief Read a password from stdin
      * 
      */
-    void collect();
+    void collect(std::string prompt);
 
     /**
      * @brief Does the string equal the canidate
@@ -111,7 +111,7 @@ class password_handler {
      * @brief Show the password as the user types it
      * 
      */
-    void follow();
+    void follow(std::string prompt, char fill = '\0');
     
     /**
      * @brief Save the canidate as the password
