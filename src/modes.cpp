@@ -41,7 +41,7 @@ int pw_add(options &opts) {
         return 11;
     } else {
         if (strlen(passwd_container.get_canidate()) == 0)
-            passwd_container.collect();
+            passwd_container.collect("Enter password to save...");
 
         try {
             std::cout << "Creating hash...\n";
@@ -107,7 +107,7 @@ int pw_hash(options &opts){
 
     } else {
         if (strlen(passwd_container.get_canidate()) == 0)
-            passwd_container.collect();
+            passwd_container.collect("Enter password to hash...");
 
         try {
             std::cout << "Creating hash...\n";

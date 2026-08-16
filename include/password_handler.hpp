@@ -42,6 +42,18 @@ class password_handler {
     * 
     */
     static void enable_echo();
+    
+    /**
+    * @brief Disable terminal echo while typing
+    * 
+    */
+    static void set_connonical();
+
+    /**
+    * @brief Enable terminal echo while typing
+    * 
+    */
+    static void set_nonconnonical();
 
     // Public Methods
     //////////////////////////////////////////////////////////////////////
@@ -70,7 +82,7 @@ class password_handler {
      * @brief Read a password from stdin
      * 
      */
-    void collect();
+    void collect(std::string prompt);
 
     /**
      * @brief Does the string equal the canidate
@@ -94,6 +106,12 @@ class password_handler {
      * @return false password unset 
      */
     bool is_set() const;
+
+    /**
+     * @brief Show the password as the user types it
+     * 
+     */
+    void follow(std::string prompt, char fill = '\0');
     
     /**
      * @brief Save the canidate as the password

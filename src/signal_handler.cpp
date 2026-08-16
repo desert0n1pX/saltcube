@@ -22,7 +22,7 @@ volatile sig_atomic_t gSignalStatus = 0;
 void check_signal(const char * caller, std::string file, int line){
     if (gSignalStatus == 0)
         return;
-    std::cout << TERM_HOME TERM_ERASE_SCREEN TERM_ERASE_SAVED;
+    std::cout << TERM_MOVE_HOME TERM_ERASE_SCREEN TERM_ERASE_SAVED;
     logging::log(logging::NOTICE, "Cleared terminal. Exiting...");
     throw signal_exception(caller, file, line, gSignalStatus);
 }

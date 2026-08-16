@@ -6,7 +6,12 @@ Copyright (C) 2026  @desert0n1pX <desert0n1pX ( at) pm [ dot ] me>
 #ifndef LOGGING_H
 #define LOGGING_H
 
-#define TERM_HOME   "\033[H"
+#define TERM_MOVE_HOME          "\033[H"
+#define TERM_MOVE_UP(n)         "\033["#n"A"
+#define TERM_MOVE_DWN(n)        "\033["#n"B"
+#define TERM_MOVE_LFT(n)        "\033["#n"C"
+#define TERM_MOVE_RHT(n)        "\033["#n"D"
+#define TERM_MOVE_TO(line,col)  "\033["#line";"#col"f"
 
 #define TERM_ERASE_TO_END           "\033[J"
 #define TERM_ERASE_AFTER_CURSOR     "\033[0J"

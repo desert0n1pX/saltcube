@@ -52,10 +52,10 @@ void * cube_mem::get_ptr() const {
 }
 
 void cube_mem::grow(){
-    grow_to(data_size * 2);
+    grow(data_size * 2);
 }
 
-void cube_mem::grow_to(size_t new_size){
+void cube_mem::grow(size_t new_size){
     if (new_size <= data_size)
         throw cube_mem_alloc_error(__PRETTY_FUNCTION__, __FILE_NAME__, __LINE__, MEM_SHRINK_ERR);
 
@@ -114,10 +114,10 @@ void cube_mem_secure::cube_mem_init() {
 }
 
 void cube_mem_secure::grow() {
-    grow_to(data_size * 2);
+    grow(data_size * 2);
 }
 
-void cube_mem_secure::grow_to(size_t new_size) {
+void cube_mem_secure::grow(size_t new_size) {
     if (new_size <= data_size)
         throw cube_mem_alloc_error(__PRETTY_FUNCTION__, __FILE_NAME__, __LINE__, MEM_SHRINK_ERR);
 

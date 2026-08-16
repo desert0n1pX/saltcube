@@ -14,5 +14,5 @@ agg art/saltcube.cast art/gif/default-saltcube.gif
 To perform the typing `ydotool` was used.
 
 ```bash
-sleep 3 ; ydotool type -D 800 -d 50 -e 1 "saltcube pw-add\n" "desert0n1pX\n" "Correct Horse Battery Staple\n"  ; sleep 4 ; ydotool type -D 800 -d 50 -e 1 "saltcube\n" "\n" "Correct Horse Battery Staple\n" ; sleep 4 ; ydotool type -D 2000 -d 50 -e 1 "remind\n" "Correct Horse Battery Staple\n" "exit\n"
+sleep 3 ; ydotool type -D 800 -d 50 -e 1 "saltcube pw-add\n" "desert0n1pX\n" "Correct Horse Battery Staple\n" ; sleep 4 ; ydotool type -D 800 -d 50 -e 1 "saltcube\n" "\n" "Correct Horse Battery Staple\n" ; sleep 4 ; ydotool type -D 2000 -d 50 -e 1 "remind\n" "shadow\n" "Correct Horse Battery staple" ; sleep 1 ; ydotool key -d 100 14:1 14:0  14:1 14:0  14:1 14:0  14:1 14:0  14:1 14:0  14:1 14:0 ; ydotool type -D 2000 -d 50 -e 1 "Staple\n" "exit\n"
 ```
